@@ -34,10 +34,10 @@ namespace BlueBadge_Project.Data
             return new ApplicationDbContext();
         }
 
-        public DbSet<SystemPlan> SystemPlan { get; set; }//== Mike
-        public DbSet<FitnessPlan> FitPlans { get; set; } //== Ashley
-        public DbSet<DietPlan> DietPlan { get; set; } //== Sam
-        public object DietaryPlan { get; set; }
+        public DbSet<SystemPlan> SystemPlan { get; set; }
+        public DbSet<FitnessPlan> FitPlans { get; set; } 
+        public DbSet<DietPlan> DietPlan { get; set; } 
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

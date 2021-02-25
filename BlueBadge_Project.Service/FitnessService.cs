@@ -21,6 +21,7 @@ namespace BlueBadge_Project.Service
             var entity =
                 new FitnessPlan()
                 {
+                    
                     Name = model.Name,
                     //FitnessDesc = model.FitnessDesc,
                     WeightLoss = model.WeightLoss,
@@ -42,7 +43,7 @@ namespace BlueBadge_Project.Service
                 var entity =
                     ctx
                     .FitPlans
-                    .Single(e => e.FitnessId == _userId);
+                    .Single(e => e.Name == _userId);
                 return
                    new FitnessDetail
                    {

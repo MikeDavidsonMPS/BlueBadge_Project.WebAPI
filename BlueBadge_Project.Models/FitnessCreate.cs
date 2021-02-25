@@ -8,8 +8,17 @@ using System.Threading.Tasks;
 
 namespace BlueBadge_Project.Models
 {
+    public enum FitRestrictions
+    {
+        LowImpact = 1,
+        Asthma,
+        HighBloodPressure,
+        NoRestrictions
+    }
     public class FitnessCreate
     {
+        public int FitnessId { get; set; }
+
         [Required]
         public string Name { get; set; } //UserName? pull from AppicationUserData
 

@@ -7,8 +7,18 @@ using System.Threading.Tasks;
 
 namespace BlueBadge_Project.Models
 {
+    public enum PlanGoal
+    {
+        LooseWeight = 1,
+        GainMuscleMass,
+        BecomeHealthly,
+        NoRestrictions
+    }
+
     public class SystemPlanCreate
     {
+        public int SysId { get; set; }
+
         [Required]
         [Range(85, 400)]
         public double StartingWeight { get; set; }

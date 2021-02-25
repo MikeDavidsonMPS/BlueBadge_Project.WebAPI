@@ -8,6 +8,13 @@ using System.Threading.Tasks;
 
 namespace BlueBadge_Project.Data
 {
+    public enum PlanGoal
+    {
+        LooseWeight = 1,
+        GainMuscleMass,
+        BecomeHealthly,
+        NoRestrictions
+    }
     public class SystemPlan
     {
         [Key]
@@ -16,27 +23,27 @@ namespace BlueBadge_Project.Data
         //[Required]
         //public string Name { get; set; } //Not is the ProjectWireFrame
 
-        //[ForeignKey(nameof(UseId))]
-        // public int UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public Guid UserId { get; set; }
 
-        // public virtual AppUser AppUser{ get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
         [ForeignKey(nameof(FitnessPlan))]
-        public int FitnessId { get; set; }
-
+        public Guid FitnessId { get; set; }
         public virtual FitnessPlan FitnessPlan { get; set; }
 
         [ForeignKey(nameof(DietPlan))]
-        public int DietId { get; set; }
+        public Guid DietId { get; set; }
 
         public virtual DietPlan DietPlan { get; set; }
+
+
+        [Required]
+        public string PlanGoal { get; set; }
 
         [Required, Range(85, 400)]
         public double StartingWeight { get; set; }
 
-        [Required]
-        [MaxLength(200, ErrorMessage = "There are too many characters in this field.")]
-        public string SystemPlanGoal { get; set; }
 
         [Required]
         public DateTimeOffset CreatedUtc { get; set; }

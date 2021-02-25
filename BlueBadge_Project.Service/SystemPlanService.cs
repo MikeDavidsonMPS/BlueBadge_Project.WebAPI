@@ -10,11 +10,11 @@ namespace BlueBadge_Project.Service
 {
     public class SystemPlanService
     {
-        private readonly Guid _userId;
+        private readonly Guid _systemId;
 
-        public SystemPlanService(Guid userId)
+        public SystemPlanService(Guid systemId)
         {
-            _userId = userId;
+            _systemId = systemId;
         }
 
         public bool CreateSystemPlan(SystemPlanCreate plan)
@@ -22,12 +22,13 @@ namespace BlueBadge_Project.Service
             var entity =
                 new SystemPlan()
                 {
-                    //UserId = _userId,
-                    FitnessId = _userId,
-                    DietId = _userId,
+                    SysId = plan.SysId,
+                    UserId = _systemId,
+                    FitnessId = _systemId,
+                    DietId = _systemId,
                     //Name = plan.Name,
                     StartingWeight = plan.StartingWeight,
-                    SystemPlanGoal = plan.PlanGoal,
+                    PlanGoal = plan.PlanGoal,
                     CreatedUtc = DateTimeOffset.Now
                 };
             using (var ctx = new ApplicationDbContext())
@@ -45,7 +46,7 @@ namespace BlueBadge_Project.Service
                 var entity =
                     ctx
                     .SystemPlan
-                    .Single(e => e.SysId == id); //UserId, FitnessId and DietId
+                    .Single(e => e.SysId == id);
                 return
                    new SystemPlanDetail
                    {
@@ -66,7 +67,7 @@ namespace BlueBadge_Project.Service
                 var entity =
                     ctx
                     .SystemPlan
-                    .Single(e => e.SysId == plan.SysId); //UserId, FitnessId and DietId
+                    .Single(e => e.SysId == plan.SysId);
 
                 //entity.Name = plan.Name;
                 entity.StartingWeight = plan.StartingWeight;
@@ -85,7 +86,7 @@ namespace BlueBadge_Project.Service
                 var entity =
                     ctx
                     .SystemPlan
-                    .Single(e => e.SysId == id); //UserId, FitnessId and DietId
+                    .Single(e => e.SysId == id);
 
                 ctx.SystemPlan.Remove(entity);
                 return ctx.SaveChanges() > 0;
@@ -99,7 +100,7 @@ namespace BlueBadge_Project.Service
                 var query =
                     ctx
                         .SystemPlan
-                        .Where(e => e.FitnessId == _userId)// -->Fitness is the WRONG
+                        .Where(e => e.UserId == _systemId)
 
                         .Select(
                         e =>
