@@ -1,4 +1,5 @@
 ﻿using BlueBadge_Project.Models;
+using BlueBadge_Project.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,62 +12,64 @@ namespace BlueBadge_Project.WebAPI.Controllers
     [Authorize]
     public class SystemPlanController : ApiController
     {
-        //POST
+      
         [HttpPost]
         public IHttpActionResult Post(SystemPlanCreate sysPlan)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var service = CreateSysPlanService();
-            if (!service.CreateSysPlan(sysPlan))
+
+            var service = CreateSystemPlanService();
+
+            if (!service.CreateSystemPlan(sysPlan))
                 return InternalServerError();
             return Ok();
         }
-        // GET
+
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult GetAll()
         {
-            DietService dietService = CreateDietService();
-            var diets = dietService.GetDiets();
-            return Ok(diets);
-        }
-        //GET/id
-        [HttpGet]
-        public IHttpActionResult Get(int dietId)
-        {
-            DietService dietService = CreateDietService();
-            var diet = dietService.GetDietById(dietId);
-            return Ok(diet);
+            SystemPlanService sysPlanService = CreateSystemPlanService();
+            var sysPlan = sysPlanService.GetSystemPlan();
+            return Ok(sysPlan);
         }
 
-        //PUT
+        [HttpGet]
+        public IHttpActionResult GetId(int sysId)
+        {
+            SystemPlanService sysPlanService = CreateSystemPlanService();
+            var sysPlan = sysPlanService.GetSystemPlanById(sysId);
+            return Ok(sysPlan);
+        }
+
         [HttpPut]
-        public IHttpActionResult Put(DietEdit diet)
+        public IHttpActionResult UpdateSysPlan(SystemPlanEdit sysPlan)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var service = CreateDietService();
-            if (!service.UpdateDiet(diet))
+            var service = CreateSystemPlanService();
+            if (!service.UpdateSystemPlan(sysPlan))
                 return InternalServerError();
             return Ok();
         }
+
         [HttpDelete]
-        public IHttpActionResult Delete(int dietId)
+        public IHttpActionResult Delete(int sysId)
         {
-            var service = CreateDietService();
-            if (!service.DeleteDiet(dietId))
+            var service = CreateSystemPlanService();
+            if (!service.DeleteSystemPlan(sysId))
                 return InternalServerError();
             return Ok();
         }
 
 
         //Need app user table done 
-        private DietService CreateDietService()
+       private DietService CreateDietService()
         {
-            var appId = Guid.Parse(User.Identity.GetDietById());
-            var dietService = new DietService(userId);
-            return dietService;
+            var appId = Guid.Parse(User.Identity.GetSysPlanById());
+            var systemPalnService = new SystemPlanService(userId);
+            return syetemPlanService;
         }
     }
 }
-}
+

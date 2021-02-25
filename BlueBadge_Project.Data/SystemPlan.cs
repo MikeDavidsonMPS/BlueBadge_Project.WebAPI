@@ -11,26 +11,25 @@ namespace BlueBadge_Project.Data
     public class SystemPlan
     {
         [Key]
-        public int SystemPlanId { get; set; }
+        public int SysId { get; set; }
 
-        //[ForeignKey(nameof(AppUser))]
-        // public int AppUserId { get; set; }
+        //[Required]
+        //public string Name { get; set; } //Not is the ProjectWireFrame
+
+        //[ForeignKey(nameof(UseId))]
+        // public int UserId { get; set; }
 
         // public virtual AppUser AppUser{ get; set; }
 
         [ForeignKey(nameof(FitnessPlan))]
-        public int FitnessPlanId { get; set; }
+        public int FitnessId { get; set; }
 
         public virtual FitnessPlan FitnessPlan { get; set; }
 
         [ForeignKey(nameof(DietPlan))]
-        public int DietPlanId { get; set; }
+        public int DietId { get; set; }
 
         public virtual DietPlan DietPlan { get; set; }
-
-        [Required]
-        public Guid UserName { get; set; } //applicationUser "UserName
-
 
         [Required, Range(85, 400)]
         public double StartingWeight { get; set; }

@@ -15,6 +15,6 @@ namespace BlueBadge_Project.Models
 
         [Required]
         [MaxLength(200, ErrorMessage = "There are too many characters in this field.")]
-        public string SystemPlanGoal { get; set; }
+        public string PlanGoal { get; set; }//does this need to be an Diet/Fitness==or enum
     }
 }

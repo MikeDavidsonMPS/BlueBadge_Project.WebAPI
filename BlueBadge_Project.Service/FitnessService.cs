@@ -16,7 +16,7 @@ namespace BlueBadge_Project.Service
                 new FitnessPlan()
                 {
                     Name = model.Name,
-                    FitnessDesc = model.FitnessDesc,
+                    //FitnessDesc = model.FitnessDesc,
                     WeightLoss = model.WeightLoss,
                     MuscleGain = model.MuscleGain,
                     Endurance = model.Endurance,
@@ -41,7 +41,7 @@ namespace BlueBadge_Project.Service
                    new FitnessDetail
                    {
                        Name = entity.Name,
-                       FitnessDesc = entity.FitnessDesc,
+                       //FitnessDesc = entity.FitnessDesc,
                        WeightLoss = entity.WeightLoss,
                        MuscleGain = entity.MuscleGain,
                        Endurance = entity.Endurance,
@@ -62,8 +62,8 @@ namespace BlueBadge_Project.Service
                     .Single(e => e.FitnessId == model.FitnessId && e.OwnerId == _userId);
 
                 entity.Name = model.Name;
-                entity.FitDesc = model.FitnessDesc;
-                entity.WeightLoss = model.FitnessDesc;
+               //entity.FitDesc = model.FitnessDesc;
+                entity.WeightLoss = model.WeightLoss;
                 entity.MuscleGain = model.MuscleGain;
                 entity.Endurance = model.Endurance;
                 entity.FitnessRestrictions = model.FitnessRestriction;
@@ -99,7 +99,7 @@ namespace BlueBadge_Project.Service
                         {
                             FitnessId = e.FitnessId,
                             Name = e.Name,
-                            FitDesc = e.FitDesc,
+                            //FitDesc = e.FitDesc,
                             CreatedUtc = e.CreatedUtc,
                         }
                         );

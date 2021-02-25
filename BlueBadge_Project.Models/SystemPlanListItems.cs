@@ -9,18 +9,18 @@ namespace BlueBadge_Project.Models
 {
     public class SystemPlanListItems
     {
-        private int SystemPlanId { get; set; }
+        private int SysPlanId { get; set; }
 
         public int _userId { get; set; }
 
         public double StartingWeight { get; set; }
 
-        public string UsersGoal { get; set; } //does this need to be an Diet/Fitness
+        public string PlanGoal { get; set; } //does this need to be an Diet/Fitness==or enum
 
-        [Required]
-        public DateTimeOffset CreatedUtc { get; set; }
+        //[Required]
+        //public DateTimeOffset CreatedUtc { get; set; }
 
-        [Display(Name = "Created")]
-        public DateTimeOffset? ModifiedUtc { get; set; }
+        //[Display(Name = "Created")]
+        //public DateTimeOffset? ModifiedUtc { get; set; }
     }
 }

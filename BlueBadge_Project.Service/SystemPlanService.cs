@@ -10,100 +10,68 @@ namespace BlueBadge_Project.Service
 {
     public class SystemPlanService
     {
-        public bool CreateFitness(SystemPlanCreate model)
+        public bool CreateSystemPlan(SystemPlanCreate model)
         {
             var entity =
-                new FitnessPlan()
+                new SystemPlan()
                 {
-                    Name = model.Name,
-                    FitnessDesc = model.FitnessDesc,
-                    WeightLoss = model.WeightLoss,
-                    MuscleGain = model.MuscleGain,
-                    Endurance = model.Endurance,
-                    FitnessRestrictions = model.FitnessRestrictions,
+                    //Name = model.Name,
+                    StartingWeight = model.StartingWeight,
+                    SystemPlanGoal = model.PlanGoal,
                     CreatedUtc = DateTimeOffset.Now
                 };
             using (var ctx = new ApplicationDbContext())
             {
-                ctx.FitPlans.Add(entity);
+                ctx.SystemPlan.Add(entity);
                 return ctx.SaveChanges() > 0;
             }
         }
-        public SystemPlanDetail GetFitnessById(int FitnessId)
+        public SystemPlanDetail GetSysIdById(int SysId)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
-                    .FitPlans
-                    .Single(e => e.FitnessId && e.OwnerId == _userId);
+                    .SystemPlan
+                    .Single(e => e.SysId && e.OwnerId == _userId);
                 return
                    new SystemPlanDetail
                    {
-                       Name = entity.Name,
-                       FitnessDesc = entity.FitnessDesc,
-                       WeightLoss = entity.WeightLoss,
-                       MuscleGain = entity.MuscleGain,
-                       Endurance = entity.Endurance,
-                       FitnessRestrictions = entity.FitnessRestrictions,
-
+                       //Name = entity.Name,
+                       StartingWeight = entity.WeightLoss,
+                       PlanGoal = entity.PlanGoal,
                        CreatedUtc = DateTimeOffset.Now
-
                    };
             }
         }
-        public bool UpdateFitness(SystemPlanEdit model)
+        public bool UpdateSystemPlan(SystemPlanEdit model)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
-                    .FitPlans
-                    .Single(e => e.FitnessId == model.FitnessId && e.OwnerId == _userId);
+                    .SystemPlan
+                    .Single(e => e.SysId == model.SysId && e.OwnerId == _userId);
 
-                entity.Name = model.Name;
-                entity.FitDesc = model.FitnessDesc;
-                entity.WeightLoss = model.FitnessDesc;
-                entity.MuscleGain = model.MuscleGain;
-                entity.Endurance = model.Endurance;
-                entity.FitnessRestrictions = model.FitnessRestriction;
+                //entity.Name = model.Name;
+                entity.StartingWeight = model.StartingWeight;
+                entity.PlanGoal = model.PlanGoal;
+
                 entity.ModifiedUtc = DateTimeOffset.UtcNow;
                 return ctx.SaveChanges() > 0;
             }
         }
-        public bool DeleteFitness(int fitnessId)
+        public bool DeleteSystemPlan(int sysId)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
-                    .FitPlans
-                    .Single(e => e.FitnessId == fitnessId && e.OwnerId == _userId);
+                    .SystemPlan
+                    .Single(e => e.FitnessId == sysId && e.OwnerId == _userId);
 
-                ctx.FitPlans.Remove(entity);
+                ctx.SystemPlan.Remove(entity);
                 return ctx.SaveChanges() > 0;
-            }
-        }
-        public IEnumerable<SystemPlanListItems> GetFitness()
-        {
-            using (var ctx = new ApplicationDbContext())
-            {
-                var query =
-                    ctx
-                        .FitPlans
-                        .Where(e => e.OwnerId == _userId)
-
-                        .Select(
-                        e =>
-                        new SystemPlanListItems
-                        {
-                            FitnessId = e.FitnessId,
-                            Name = e.Name,
-                            FitDesc = e.FitDesc,
-                            CreatedUtc = e.CreatedUtc,
-                        }
-                        );
-                return query.ToArray();
             }
         }
     }

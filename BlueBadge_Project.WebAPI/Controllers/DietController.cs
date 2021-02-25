@@ -1,5 +1,6 @@
 ﻿using BlueBadge_Project.Models;
 using BlueBadge_Project.Service;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,21 +24,21 @@ namespace BlueBadge_Project.WebAPI.Controllers
             return Ok();
         }
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult GetAll()
         {
             DietService dietService = CreateDietService();
             var diets = dietService.GetDiets();
             return Ok(diets);
         }
         [HttpGet]
-        public IHttpActionResult Get(int dietId)
+        public IHttpActionResult GetId(int dietId)
         {
             DietService dietService = CreateDietService();
             var diet = dietService.GetDietById(dietId);
             return Ok(diet);
         }
         [HttpPut]
-        public IHttpActionResult Put(DietEdit diet)
+        public IHttpActionResult UpdateDiet(DietEdit diet)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -47,7 +48,7 @@ namespace BlueBadge_Project.WebAPI.Controllers
             return Ok();
         }
         [HttpDelete]
-        public IHttpActionResult Delete(int dietId)
+        public IHttpActionResult DeleteDiet(int dietId)
         {
             var service = CreateDietService();
             if (!service.DeleteDiet(dietId))
@@ -57,11 +58,11 @@ namespace BlueBadge_Project.WebAPI.Controllers
 
 
         //Need app user table done 
-        //private DietService CreateDietService()
-        //{
-            //var appId = Guid.Parse(User.Identity.GetDietById());
-           // var dietService = new DietService(userId);
-            //return dietService;
-       // }
+        private DietService CreateDietService()
+        {
+            var appId = Guid.Parse(User.Identity.GetUserId());
+            var dietService = new DietService(appId);
+            return dietService;
+        }
     }
 }

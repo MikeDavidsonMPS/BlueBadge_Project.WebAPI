@@ -13,9 +13,9 @@ namespace BlueBadge_Project.Models
 
         public string Name { get; set; }
 
-        [MaxLength(200, ErrorMessage = "There are too many characters in this field.")]
-        [Display(Name = "Description")]
-        public string DietDesc { get; set; }
+        //[MaxLength(200, ErrorMessage = "There are too many characters in this field.")]
+        //[Display(Name = "Description")]
+        //public string DietDesc { get; set; }
 
         [Display(Name = "Created")]
         public DateTimeOffset CreatedUtc { get; set; }

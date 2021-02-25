@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BlueBadge_Project.Models;
+using BlueBadge_Project.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,44 +13,44 @@ namespace BlueBadge_Project.WebAPI.Controllers
     public class DietController : ApiController
     {
         [HttpPost]
-        public IHttpActionResult Post(DietCreate diet)
+        public IHttpActionResult Post(FitnessCreate fit)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var service = CreateDietService();
-            if (!service.CreateDiet(diet))
+            var service = CreateFitnessService();
+            if (!service.CreateFit(fit))
                 return InternalServerError();
             return Ok();
         }
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult GetAll()
         {
-            DietService dietService = CreateDietService();
-            var diets = dietService.GetDiets();
-            return Ok(diets);
+            FitnessService fitnessService = CreateFitService();
+            var fits = fitnessService.GetFit();
+            return Ok(fit);
         }
         [HttpGet]
-        public IHttpActionResult Get(int dietId)
+        public IHttpActionResult GetId(int fitId)
         {
-            DietService dietService = CreateDietService();
-            var diet = dietService.GetDietById(dietId);
-            return Ok(diet);
+            FitnessService fitService = CreateFitService();
+            var fit = fitService.GetFitById(fitId);
+            return Ok(fit);
         }
         [HttpPut]
-        public IHttpActionResult Put(DietEdit diet)
+        public IHttpActionResult UpdateFittness(FitnessEdit fit)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var service = CreateDietService();
-            if (!service.UpdateDiet(diet))
+            var service = CreateFitnessService();
+            if (!service.UpdateDiet(fit))
                 return InternalServerError();
             return Ok();
         }
         [HttpDelete]
-        public IHttpActionResult Delete(int dietId)
+        public IHttpActionResult DeleteFittness(int fitId)
         {
-            var service = CreateDietService();
-            if (!service.DeleteDiet(dietId))
+            var service = CreateFitnessService();
+            if (!service.DeleteFit(fitId))
                 return InternalServerError();
             return Ok();
         }

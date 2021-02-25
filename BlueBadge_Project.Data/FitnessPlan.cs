@@ -22,8 +22,10 @@ public class FitnessPlan
     public int FitnessId { get; set; }
     [Required]
     public string Name { get; set; }
-    [Required]
-    public string FitnessDesc { get; set; }
+
+    //[Required]
+    //public string FitnessDesc { get; set; }
+
     [Required]
     public bool WeightLoss { get; set; }
     [Required]

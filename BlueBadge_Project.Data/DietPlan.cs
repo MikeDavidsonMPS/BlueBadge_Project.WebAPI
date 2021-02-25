@@ -20,19 +20,25 @@ namespace BlueBadge_Project.Data
     {
         [Key]
         public int DietId { get; set; }
+
         [Required]
         public string Name { get; set; }
-        [Required]
-        public string DietDesc { get; set; }
-        [Required]
 
+        //[Required]
+       // public string DietDesc { get; set; }
+
+        [Required]
         public bool BalancedDiet { get; set; }
+
         [Required]
         public bool Protein { get; set; }
+
         [Required]
         public bool Vegatarian { get; set; }
+
         [Required]
         public bool Carbo { get; set; }
+
         [Required]
         public DateTimeOffset CreatedUtc { get; set; }
         public DateTimeOffset? ModifiedUtc { get; set; }

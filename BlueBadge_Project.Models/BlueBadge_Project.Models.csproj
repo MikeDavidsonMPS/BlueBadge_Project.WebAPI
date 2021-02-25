@@ -55,11 +55,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DietCreate.cs" />
+    <Compile Include="DietDetail.cs" />
+    <Compile Include="DietEdit.cs" />
     <Compile Include="DietListItems.cs" />
     <Compile Include="FitnessCreate.cs" />
+    <Compile Include="FitnessDetail.cs" />
+    <Compile Include="FitnessEdit.cs" />
     <Compile Include="FitnessListItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemPlanDetail.cs" />
+    <Compile Include="SystemPlanEdit.cs" />
     <Compile Include="SystemPlanListItems.cs" />
     <Compile Include="SystemPlanCreate.cs" />
   </ItemGroup>

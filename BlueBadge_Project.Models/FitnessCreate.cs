@@ -13,9 +13,9 @@ namespace BlueBadge_Project.Models
         [Required]
         public string Name { get; set; } //UserName? pull from AppicationUserData
 
-        [Required]
-        [MaxLength(100, ErrorMessage = "There are too many characters in this field.")]
-        public string FitnessDesc { get; set; }
+        //[Required]
+        //[MaxLength(100, ErrorMessage = "There are too many characters in this field.")]
+        //public string FitnessDesc { get; set; }
 
         [Required]
         public bool WeightLoss { get; set; }
@@ -25,6 +25,8 @@ namespace BlueBadge_Project.Models
 
         [Required]
         public bool Endurance { get; set; }
+
+
 
         [Required]
         public FitRestrictions FitnessRestrictions { get; set; }
