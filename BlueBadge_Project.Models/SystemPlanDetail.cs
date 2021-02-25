@@ -9,7 +9,7 @@ namespace BlueBadge_Project.Models
 {
     public class SystemPlanDetail
     {
-        public int SysPlanId { get; set; }
+        public int SysId { get; set; }
 
         public double StartingWeight { get; set; }
 

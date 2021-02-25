@@ -61,7 +61,7 @@ namespace BlueBadge_Project.WebAPI.Controllers
         private DietService CreateDietService()
         {
             var appId = Guid.Parse(User.Identity.GetUserId());
-            var dietService = new DietService(appId);
+            var dietService = new SystemService(appId);
             return dietService;
         }
     }

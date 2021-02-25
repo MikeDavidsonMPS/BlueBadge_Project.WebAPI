@@ -1,5 +1,6 @@
 ﻿using BlueBadge_Project.Models;
 using BlueBadge_Project.Service;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,63 +13,65 @@ namespace BlueBadge_Project.WebAPI.Controllers
     [Authorize]
     public class SystemPlanController : ApiController
     {
-      
+
+        [HttpGet]
+        public IHttpActionResult GetAll()
+        {
+            SystemPlanService systemPlanService = CreateSystemPlanService();
+            var plan = systemPlanService.GetSystemPlan();
+            return Ok(plan);
+        }
+
         [HttpPost]
-        public IHttpActionResult Post(SystemPlanCreate sysPlan)
+        public IHttpActionResult Post(SystemPlanCreate plan)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreateSystemPlanService();
 
-            if (!service.CreateSystemPlan(sysPlan))
+            if (!service.CreateSystemPlan(plan))
                 return InternalServerError();
             return Ok();
         }
 
         [HttpGet]
-        public IHttpActionResult GetAll()
+        public IHttpActionResult GetId(int id)
         {
-            SystemPlanService sysPlanService = CreateSystemPlanService();
-            var sysPlan = sysPlanService.GetSystemPlan();
-            return Ok(sysPlan);
+            SystemPlanService systemPlanService = CreateSystemPlanService();
+            var plan = systemPlanService.GetSysIdById(id);
+            return Ok(plan);
         }
 
-        [HttpGet]
-        public IHttpActionResult GetId(int sysId)
+        private SystemPlanService CreateSystemPlanService()
         {
-            SystemPlanService sysPlanService = CreateSystemPlanService();
-            var sysPlan = sysPlanService.GetSystemPlanById(sysId);
-            return Ok(sysPlan);
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var systemPlanService = new SystemPlanService(userId);
+            return systemPlanService;
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateSysPlan(SystemPlanEdit sysPlan)
+        public IHttpActionResult UpdatePlan(SystemPlanEdit plan)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
             var service = CreateSystemPlanService();
-            if (!service.UpdateSystemPlan(sysPlan))
+
+            if (!service.UpdatePlan(plan))
                 return InternalServerError();
             return Ok();
         }
 
         [HttpDelete]
-        public IHttpActionResult Delete(int sysId)
+        public IHttpActionResult Delete(int id)
         {
             var service = CreateSystemPlanService();
-            if (!service.DeleteSystemPlan(sysId))
+
+            if (!service.DeletePlan(id))
                 return InternalServerError();
+
             return Ok();
-        }
-
-
-        //Need app user table done 
-       private DietService CreateDietService()
-        {
-            var appId = Guid.Parse(User.Identity.GetSysPlanById());
-            var systemPalnService = new SystemPlanService(userId);
-            return syetemPlanService;
         }
     }
 }

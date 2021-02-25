@@ -10,14 +10,24 @@ namespace BlueBadge_Project.Service
 {
     public class SystemPlanService
     {
-        public bool CreateSystemPlan(SystemPlanCreate model)
+        private readonly Guid _userId;
+
+        public SystemPlanService(Guid userId)
+        {
+            _userId = userId;
+        }
+
+        public bool CreateSystemPlan(SystemPlanCreate plan)
         {
             var entity =
                 new SystemPlan()
                 {
-                    //Name = model.Name,
-                    StartingWeight = model.StartingWeight,
-                    SystemPlanGoal = model.PlanGoal,
+                    //UserId = _userId,
+                    FitnessId = _userId,
+                    DietId = _userId,
+                    //Name = plan.Name,
+                    StartingWeight = plan.StartingWeight,
+                    SystemPlanGoal = plan.PlanGoal,
                     CreatedUtc = DateTimeOffset.Now
                 };
             using (var ctx = new ApplicationDbContext())
@@ -26,52 +36,83 @@ namespace BlueBadge_Project.Service
                 return ctx.SaveChanges() > 0;
             }
         }
-        public SystemPlanDetail GetSysIdById(int SysId)
+
+
+        public SystemPlanDetail GetSysIdById(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                     .SystemPlan
-                    .Single(e => e.SysId && e.OwnerId == _userId);
+                    .Single(e => e.SysId == id); //UserId, FitnessId and DietId
                 return
                    new SystemPlanDetail
                    {
+                       SysId = entity.SysId,
                        //Name = entity.Name,
-                       StartingWeight = entity.WeightLoss,
+                       StartingWeight = entity.StartingWeight,
                        PlanGoal = entity.PlanGoal,
                        CreatedUtc = DateTimeOffset.Now
                    };
             }
         }
-        public bool UpdateSystemPlan(SystemPlanEdit model)
+
+
+        public bool UpdatePlan(SystemPlanEdit plan)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                     .SystemPlan
-                    .Single(e => e.SysId == model.SysId && e.OwnerId == _userId);
+                    .Single(e => e.SysId == plan.SysId); //UserId, FitnessId and DietId
 
-                //entity.Name = model.Name;
-                entity.StartingWeight = model.StartingWeight;
-                entity.PlanGoal = model.PlanGoal;
+                //entity.Name = plan.Name;
+                entity.StartingWeight = plan.StartingWeight;
+                entity.PlanGoal = plan.PlanGoal;
 
                 entity.ModifiedUtc = DateTimeOffset.UtcNow;
                 return ctx.SaveChanges() > 0;
             }
         }
-        public bool DeleteSystemPlan(int sysId)
+
+
+        public bool DeletePlan(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                     .SystemPlan
-                    .Single(e => e.FitnessId == sysId && e.OwnerId == _userId);
+                    .Single(e => e.SysId == id); //UserId, FitnessId and DietId
 
                 ctx.SystemPlan.Remove(entity);
                 return ctx.SaveChanges() > 0;
+            }
+        }
+
+        public IEnumerable<SystemPlanListItems> GetSystemPlan()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .SystemPlan
+                        .Where(e => e.FitnessId == _userId)// -->Fitness is the WRONG
+
+                        .Select(
+                        e =>
+                        new SystemPlanListItems
+                        {
+                            SysId = e.SysId,
+                            //Name = e.Name,
+                            StartingWeight = e.StartingWeight,
+                            PlanGoal = e.PlanGoal,
+
+                        }
+                   );
+                return query.ToArray();
             }
         }
     }

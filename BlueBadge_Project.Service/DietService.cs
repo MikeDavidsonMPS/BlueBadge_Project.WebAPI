@@ -46,7 +46,7 @@ namespace BlueBadge_Project.Service
                 var entity =
                     ctx
                     .DietPlan
-                    .Single(e => e.DietId == DietId && e.OwnerId == _userId); // ---> needs AppID created to fix
+                    .Single(e => e.DietId == DietId); // ---> needs AppID created to fix
                 return
                     new DietDetail
                     {
@@ -70,7 +70,7 @@ namespace BlueBadge_Project.Service
                 var entity =
                     ctx
                     .DietPlan
-                    .Single(e => e.DietId == model.DietId && e.OwnerId == _userId);// -->needs AppID created to fix
+                    .Single(e => e.DietId == model.DietId);// -->needs AppID created to fix
 
                 entity.Name = model.Name;
                 //entity.DietDesc = model.DietDesc;
@@ -92,7 +92,7 @@ namespace BlueBadge_Project.Service
                 var entity =
                     ctx
                     .DietPlan
-                    .Single(e => e.DietId == dietId && e.OwnerId == _userId);// -->needs AppID created to fix
+                    .Single(e => e.DietId == dietId);// -->needs AppID created to fix
 
                 ctx.DietPlan.Remove(entity);
                 return ctx.SaveChanges() > 0;
@@ -109,7 +109,7 @@ namespace BlueBadge_Project.Service
                 var query =
                     ctx
                         .DietPlan
-                        .Where(e => e.OwnerId == _userId)// -->needs AppID created to fix
+                        .Where(e => e.DietId == _userId)// -->needs AppID created to fix
 
                         .Select(
                         e =>

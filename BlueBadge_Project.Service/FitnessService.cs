@@ -10,6 +10,12 @@ namespace BlueBadge_Project.Service
 {
     public class FitnessService
     {
+        private readonly Guid _userId;
+
+        public FitnessService(Guid userId)
+        {
+            _userId = userId;
+        }
         public bool CreateFitness(FitnessCreate model)
         {
             var entity =
@@ -36,7 +42,7 @@ namespace BlueBadge_Project.Service
                 var entity =
                     ctx
                     .FitPlans
-                    .Single(e => e.FitnessId && e.OwnerId == _userId);
+                    .Single(e => e.FitnessId == _userId);
                 return
                    new FitnessDetail
                    {
@@ -84,7 +90,7 @@ namespace BlueBadge_Project.Service
                 return ctx.SaveChanges() > 0;
             }
         }
-        public IEnumerable<FitnessListItems> GetFitness()
+        public IEnumerable<FitnessListItem> GetFitness()
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -95,7 +101,7 @@ namespace BlueBadge_Project.Service
 
                         .Select(
                         e =>
-                        new FitnessListItems
+                        new FitnessListItem
                         {
                             FitnessId = e.FitnessId,
                             Name = e.Name,

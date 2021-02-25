@@ -7,12 +7,17 @@ using System.Threading.Tasks;
 
 namespace BlueBadge_Project.Models
 {
-    public class FitnessListItem
+    public class FitnessListItems
     {
         public int FitnessId { get; set; }
+
         public string Name { get; set; }
-        [Display(Name = "Description")]
-        public string FitDesc { get; set; }
+
+       // [MaxLength(200, ErrorMessage = "There are too many characters in this field.")]
+        //[Display(Name = "Description")]
+        //public string FitDesc { get; set; }
+
+
         [Display(Name = "Created")]
         public DateTimeOffset CreatedUtc { get; set; }
     }
